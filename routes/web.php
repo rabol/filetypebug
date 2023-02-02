@@ -22,12 +22,22 @@ Route::get('/', function () {
 
 Route::post('/', function (Request $request) {
 
+    // ------ this will fail -----
     $validator = Validator::make($request->all(), [
         'pfxfile' => ['required', 'file', File::types(['p12','pfx'])],
     ]);
 
-    $validator->
-    $validData = $validator->validate();
+    $validator->validate();
+    dd($request->file('pfxfile'));
 
-    return 'ok';
+
+    // -----  this will work ----
+    $validator = Validator::make($request->all(), [
+        'pfxfile' => ['required','file'],
+    ]);
+    $validator->validate();
+
+    // dd will show that the file is "application/x-pkcs12"
+    dd($request->file('pfxfile'));
+
 })->name('filetypebug');
