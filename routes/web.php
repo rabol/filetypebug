@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\File;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +17,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('filetypebug');
 });
+
+Route::post('/', function (Request $request) {
+
+    $validator = Validator::make($request->all(), [
+        'pfxfile' => ['required', 'file', File::types(['p12','pfx'])],
+    ]);
+
+    $validator->
+    $validData = $validator->validate();
+
+    return 'ok';
+})->name('filetypebug');
